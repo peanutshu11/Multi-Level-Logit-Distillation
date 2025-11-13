@@ -7,4 +7,13 @@ test_acc: 18.29
 test_acc_top5: 46.91
 test_loss: 3.63
 -------------------------
-best_acc	18.29
+best_acc	18.29-------------------------
+epoch: 1
+lr: 0.03
+train_acc: 11.13
+train_loss: 48.82
+test_acc: 16.15
+test_acc_top5: 43.34
+test_loss: 3.78
+-------------------------
+best_acc	16.15
