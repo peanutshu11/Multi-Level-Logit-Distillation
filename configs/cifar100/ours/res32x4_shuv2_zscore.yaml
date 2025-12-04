@@ -1,9 +1,9 @@
 EXPERIMENT:
   NAME: ""
-  TAG: "kd_ours,res32x4,shuv2"
+  TAG: "KD_z_scores,res32x4,shuv2"
   PROJECT: "cifar100_baselines_epoch960"
 DISTILLER:
-  TYPE: "KD_ours"
+  TYPE: "KD_z_scores"
   TEACHER: "resnet32x4"
   STUDENT: "ShuffleV2"
 SOLVER:
