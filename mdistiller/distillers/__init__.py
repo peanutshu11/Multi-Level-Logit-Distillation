@@ -15,12 +15,14 @@ from .VID import VID
 from .ReviewKD import ReviewKD
 from .DKD import DKD
 from .KD_z_score import KD_z_scores
+from .KD_weighted_spearman import KD_WSpearman
 
 distiller_dict = {
     "NONE": Vanilla,
     "KD": KD,
     "KD_ours": KD_ours,
     "KD_z_scores": KD_z_scores,
+    "KD_WSpearman": KD_WSpearman,
     "AT": AT,
     "OFD": OFD,
     "RKD": RKD,
