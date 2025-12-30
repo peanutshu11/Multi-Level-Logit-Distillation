@@ -24,22 +24,28 @@ import torch
 
 
 def wrap_class(cls, **kwargs):
-  """Wraps the given NumpyOp in a torch Function."""
+    """Wraps the given NumpyOp in a torch Function."""
 
-  class NumpyOpWrapper(torch.autograd.Function):
-    """A torch Function wrapping a NumpyOp."""
+    class NumpyOpWrapper(torch.autograd.Function):
+        """A torch Function wrapping a NumpyOp."""
 
-    @staticmethod
-    def forward(ctx, values):
-      obj = cls(values.detach().numpy(), **kwargs)
-      ctx.numpy_obj = obj
-      return torch.from_numpy(obj.compute())
+        @staticmethod
+        def forward(ctx, values):
+            # Move to CPU before converting to numpy
+            cpu_values = values.detach().cpu().numpy()
+            obj = cls(cpu_values, **kwargs)
+            ctx.numpy_obj = obj
+            return torch.from_numpy(obj.compute()).to(values.device)  # move back to original device
 
-    @staticmethod
-    def backward(ctx, grad_output):
-      return torch.from_numpy(ctx.numpy_obj.vjp(grad_output.numpy()))
+        @staticmethod
+        def backward(ctx, grad_output):
+            # Move grad_output to CPU before converting to numpy
+            cpu_grad = grad_output.detach().cpu().numpy()
+            grad_input = ctx.numpy_obj.vjp(cpu_grad)
+            return torch.from_numpy(grad_input).to(grad_output.device)  # move back to original device
 
-  return NumpyOpWrapper
+    return NumpyOpWrapper
+
 
 
 def map_tensor(map_fn, tensor):
