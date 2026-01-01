@@ -15,7 +15,9 @@ from .VID import VID
 from .ReviewKD import ReviewKD
 from .DKD import DKD
 from .KD_z_score import KD_z_scores
-from .KD_weighted_spearman import KD_WSpearman
+from .KD_wsm import KD_WSpearman
+from .KD_zwsm import KD_ZWSpearman
+from .KD_wRKKD import wRKKD
 
 distiller_dict = {
     "NONE": Vanilla,
@@ -23,6 +25,8 @@ distiller_dict = {
     "KD_ours": KD_ours,
     "KD_z_scores": KD_z_scores,
     "KD_WSpearman": KD_WSpearman,
+    "KD_zwsm": KD_ZWSpearman,
+    "wRKKD": wRKKD,
     "AT": AT,
     "OFD": OFD,
     "RKD": RKD,
