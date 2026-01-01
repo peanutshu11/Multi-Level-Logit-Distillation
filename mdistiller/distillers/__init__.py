@@ -25,7 +25,7 @@ distiller_dict = {
     "KD_ours": KD_ours,
     "KD_z_scores": KD_z_scores,
     "KD_WSpearman": KD_WSpearman,
-    "KD_zwsm": KD_ZWSpearman,
+    "KD_ZWSpearman": KD_ZWSpearman,
     "wRKKD": wRKKD,
     "AT": AT,
     "OFD": OFD,
