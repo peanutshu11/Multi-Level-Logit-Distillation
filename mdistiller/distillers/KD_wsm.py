@@ -226,8 +226,7 @@ class KD_WSpearman(Distiller):
         ) * mask).mean())
         
 
-        loss_wspm = 1-(self.kd_loss_weight * weighted_spearman(logits_student_weak, logits_teacher_weak)
-        + self.kd_loss_weight * weighted_spearman(logits_student_strong, logits_teacher_strong))
+        loss_wspm = 0.2 * (1 - weighted_spearman(logits_student_weak, logits_teacher_weak))
 
         losses_dict = {
             "loss_ce": loss_ce,
