@@ -21,11 +21,6 @@ class CIFAR100Instance(datasets.CIFAR100):
         img, target = super().__getitem__(index)
         return img, target, index
 
-class KCDCIFAR100(datasets.CIFAR100):
-    def __getitem__(self, index):
-        img, target = super().__getitem__(index)
-        return img, target, index
-
 
 # CIFAR-100 for CRD
 class CIFAR100InstanceSample(datasets.CIFAR100):
