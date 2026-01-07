@@ -361,7 +361,7 @@ class KCDTrainer(BaseTrainer):
         with torch.no_grad():
             probs = F.softmax(preds, dim=1)
             entropy = -torch.sum(probs * torch.log(probs), dim=1)
-            temp = entropy.cpu()
+            temp = entropy.cpu().numpy()
             _entropy[index] = temp
 
         # backward
