@@ -18,6 +18,7 @@ from .KD_z_score import KD_z_scores
 from .KD_wsm import KD_WSpearman
 from .KD_zwsm import KD_ZWSpearman
 from .KD_wRKKD import wRKKD
+from .MLLD_KCD import MLLD_KCD
 
 distiller_dict = {
     "NONE": Vanilla,
@@ -25,6 +26,7 @@ distiller_dict = {
     "KD_ours": KD_ours,
     "KD_z_scores": KD_z_scores,
     "KD_WSpearman": KD_WSpearman,
+    "MLLD_KCD": MLLD_KCD,
     "KD_ZWSpearman": KD_ZWSpearman,
     "wRKKD": wRKKD,
     "AT": AT,

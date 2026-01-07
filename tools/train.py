@@ -28,7 +28,7 @@ def main(cfg, resume, opts):
     # cfg & loggers
     show_cfg(cfg)
     # init dataloader & models
-    train_loader, val_loader, num_data, num_classes = get_dataset_strong(cfg)
+    train_loader, val_loader, num_data, num_classes, train_set = get_dataset_strong(cfg)
 
     # vanilla
     # if cfg.DISTILLER.TYPE == "NONE":
@@ -62,7 +62,7 @@ def main(cfg, resume, opts):
 
     # train
     trainer = trainer_dict[cfg.SOLVER.TRAINER](
-        experiment_name, distiller, train_loader, val_loader, cfg
+        experiment_name, distiller, train_loader, val_loader, cfg, train_set
     )
     trainer.train(resume=resume)
 
