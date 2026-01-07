@@ -362,7 +362,8 @@ class KCDTrainer(BaseTrainer):
             probs = F.softmax(preds, dim=1)
             entropy = -torch.sum(probs * torch.log(probs), dim=1)
             temp = entropy.cpu().numpy()
-            _entropy[index] = temp
+            idx = index.cpu().numpy()
+            _entropy[idx] = temp
 
         # backward
         loss = sum([l.mean() for l in losses_dict.values()])
