@@ -38,8 +38,8 @@ class KCDCIFAR100(datasets.CIFAR100):
     
     @torch.no_grad()
     def mixup(self):
-        remain_idx = torch.tensor(self.mix_remain)
-        lost_idx   = torch.tensor(self.lost)
+        remain_idx = torch.tensor(self.mix_remain.copy())
+        lost_idx   = torch.tensor(self.lost.copy())
         remain_data = self.mix_up_data[remain_idx]
         lost_data   = self.mix_up_data[lost_idx]
         
