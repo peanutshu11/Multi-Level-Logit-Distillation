@@ -36,6 +36,27 @@ class KCDCIFAR100(datasets.CIFAR100):
     def __len__(self):
         return len(self.remain)
     
+    @torch.no_grad()
+    def mixup(self):
+        remain_idx = torch.as_tensor(self.mix_remain)
+        lost_idx   = torch.as_tensor(self.lost)
+        remain_data = self.mix_up_data[remain_idx]
+        lost_data   = self.mix_up_data[lost_idx]
+        
+        mix_len = len(remain_idx)
+        idx = torch.arange(mix_len, device=remain_data.device)
+        
+        remain_rate = (1 - 0.7) * ((mix_len - idx) / mix_len) + 0.7
+        lost_rate = 1.0 - remain_rate
+
+        # broadcast
+        view_shape = [mix_len] + [1] * (remain_data.dim() - 1)
+        remain_rate = remain_rate.view(view_shape)
+        lost_rate = lost_rate.view(view_shape)
+        mixup = remain_data * remain_rate + lost_data * lost_rate
+
+        self.mix_up_data[remain_idx] = mixup.to(torch.uint8)
+
 
     def init_len(self):
         return len(self.data)
@@ -65,7 +86,11 @@ class KCDCIFAR100(datasets.CIFAR100):
         _entropy = np.divide(_entropy, _sum)
         scores = ET * _entropy
         indice = scores.argsort()[::-1]
+        pre_len = len(self.remain)
         self.remain = indice[:remain_num]
+        self.lost = indice[remain_num:pre_len]
+        self.mix_remain = self.remain[-len(self.lost):]
+        self.mixup()
     
 
 def get_kcd_dataloader(batch_size, val_batch_size, num_workers):
