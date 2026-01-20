@@ -73,7 +73,10 @@ class KCDCIFAR100(datasets.CIFAR100):
     def update_remain(self, remain):
         self.remain = remain
     
-    def update_dataset(self):
+    def update_dataset(self, correct):
+        incorrect_indices = np.where(correct == 0)[0]  # indices of wrong predictions
+        correct_indices = np.where(correct == 1)[0]
+
         if len(self.remain) - int(len(self.data) * (1 - self.threshold) / 6) < int(self.threshold * len(self.data)):
             remain_num = int(self.threshold * len(self.data))
         else:
@@ -88,9 +91,9 @@ class KCDCIFAR100(datasets.CIFAR100):
         _entropy = np.divide(_entropy, _sum)
         scores = ET * _entropy
         indice = scores.argsort()[::-1]
-        pre_len = len(self.remain)
-        self.remain = indice[:remain_num]
-        self.lost = indice[remain_num:pre_len]
+        sorted_correct = correct_indices[indice]
+        self.remain = np.concatenate([incorrect_indices, sorted_correct[:remain_num]])
+        self.lost = np.setdiff1d(np.arange(len(self.data)), self.remain)
         self.mix_remain = self.remain[-len(self.lost):]
         self.mixup()
     

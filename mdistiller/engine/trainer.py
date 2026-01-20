@@ -277,11 +277,31 @@ class KCDTrainer(BaseTrainer):
             self.train_epoch(epoch, _entropy)
             self.train_set.update_statistics(_entropy)
             if epoch % self.cfg.KCD.PURIFICATION == 0:
-                self.train_set.update_dataset()
+                train_pred = self.get_pred()
+                self.train_set.update_dataset(train_pred)
             epoch += 1
         print(log_msg("Best accuracy:{}".format(self.best_acc), "EVAL"))
         with open(os.path.join(self.log_path, "worklog.txt"), "a") as writer:
             writer.write("best_acc\t" + "{:.2f}".format(float(self.best_acc)))
+
+    def get_pred(self):
+        all_correct = np.zeros(self.train_set.init_len())
+        for idx, data in enumerate(self.train_loader):
+            with torch.no_grad():
+                image, target, index = data
+                image = image.float()
+                image = image.cuda(non_blocking=True)
+                target = target.cuda(non_blocking=True)
+                index = index.cuda(non_blocking=True)
+
+                logits, losses_dict = self.distiller(image=image, target=target)
+            pred = logits.argmax(dim=1)
+            correct = (pred == target).long().cpu().numpy()
+            indices  = index.cpu().numpy()
+            all_correct[indices] = correct
+        return all_correct
+
+
 
     def train_epoch(self, epoch, _entropy):
         lr = adjust_learning_rate(epoch, self.cfg, self.optimizer)
