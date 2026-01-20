@@ -82,9 +82,9 @@ class KCDCIFAR100(datasets.CIFAR100):
         else:
             remain_num = len(self.remain) - int(len(self.data) * (1 - self.threshold) / 6)
 
-        _entropy = np.clip(self.entropy_record,0.0,a_max = self.entropy_record.max())
+        _entropy = np.clip(self.entropy_record[correct_indices],0.0,a_max = self.entropy_record.max())
         _entropy = np.sum(_entropy, axis=1)
-        _sum = np.where(self.entropy_record > 0.0, 1.0, 0.0)
+        _sum = np.where(self.entropy_record[correct_indices] > 0.0, 1.0, 0.0)
         _sum = np.sum(_sum, axis=1)
         ET = np.divide(_sum, 40.0)
         ET = np.power(ET, 0.03)
