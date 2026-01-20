@@ -294,7 +294,7 @@ class KCDTrainer(BaseTrainer):
                 target = target.cuda(non_blocking=True)
                 index = index.cuda(non_blocking=True)
 
-                logits, losses_dict = self.distiller(image=image, target=target)
+                logits = self.distiller.forward_test(image=image)
             pred = logits.argmax(dim=1)
             correct = (pred == target).long().cpu().numpy()
             indices  = index.cpu().numpy()
