@@ -65,9 +65,15 @@ class KCDCIFAR100(datasets.CIFAR100):
 
     def update_statistics(self, entropy):
         if self.entropy_record is None:
-            self.entropy_record = entropy.reshape((len(entropy),1))
-        else:
-            self.entropy_record = np.concatenate((self.entropy_record, entropy.reshape((len(entropy),1))),axis=1)
+            self.entropy_record = np.zeros((len(self.data), 1))
+
+        col = np.zeros(len(self.data))
+        col[self.remain] = entropy
+
+        self.entropy_record = np.concatenate(
+            (self.entropy_record, col.reshape(-1, 1)),
+            axis=1
+        )
 
 
     def update_remain(self, remain):
