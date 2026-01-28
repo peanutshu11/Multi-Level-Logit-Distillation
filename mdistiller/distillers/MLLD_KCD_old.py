@@ -3,24 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from ._base import Distiller
-from fast_soft_sort.pytorch_ops import soft_rank
 
-
-def weighted_spearman(logits_student, logits_teacher, N0):
-    sr = soft_rank(logits_student)
-    tr = soft_rank(logits_teacher)
-
-    weights = 1.0 / (tr + N0).pow(2)
-    w_sum = weights.sum()
-
-    x_bar = (weights * sr).sum() / w_sum
-    y_bar = (weights * tr).sum() / w_sum
-
-    cov = (weights * (sr - x_bar) * (tr - y_bar)).sum()
-    var_x = (weights * (sr - x_bar).pow(2)).sum()
-    var_y = (weights * (tr - y_bar).pow(2)).sum()
-
-    return cov / torch.sqrt(var_x * var_y + 1e-8)
 
 def kd_loss(logits_student, logits_teacher, temperature):
     log_pred_student = F.log_softmax(logits_student / temperature, dim=1)
@@ -55,16 +38,15 @@ def bc_loss(logits_student, logits_teacher, temperature, reduce=True):
     return consistency_loss
 
 
-class MLLD_KCD(Distiller):
+class MLLD_KCD_old(Distiller):
     """Distilling the Knowledge in a Neural Network"""
 
     def __init__(self, student, teacher, cfg):
-        super(MLLD_KCD, self).__init__(student, teacher)
+        super(MLLD_KCD_old, self).__init__(student, teacher)
         self.temperature = cfg.KD.TEMPERATURE
         self.ce_loss_weight = cfg.KD.LOSS.CE_WEIGHT
         self.kd_loss_weight = cfg.KD.LOSS.KD_WEIGHT
         self.z_score = cfg.KD.Z_SCORE
-        self.N0 = cfg.KD.WSM
 
     def z_score_norm(self, logits):
         mean = logits.mean(dim=1, keepdim=True)
@@ -164,13 +146,10 @@ class MLLD_KCD(Distiller):
             )
         )
 
-        loss_wspm = self.kd_loss_weight * (1 - weighted_spearman(logits_student, logits_teacher, self.N0))
-
         losses_dict = {
             "loss_ce": loss_ce,
             "loss_kd": loss_kd,
             "loss_cc": loss_cc,
-            "loss_bc": loss_bc,
-            "loss_wspm": loss_wspm
+            "loss_bc": loss_bc
         }
         return logits_student, losses_dict

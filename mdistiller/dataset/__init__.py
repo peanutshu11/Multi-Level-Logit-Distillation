@@ -1,7 +1,7 @@
 from .cifar100 import get_cifar100_dataloaders, get_cifar100_dataloaders_sample, get_cifar100_dataloaders_strong
 from .imagenet import get_imagenet_dataloaders, get_imagenet_dataloaders_sample, get_imagenet_dataloaders_strong
 from .KCD_cifar100 import get_kcd_dataloader
-
+from .KCD_old import get_kcd_dataloader_old
 
 def get_dataset(cfg):
     if cfg.DATASET.TYPE == "cifar100":
@@ -54,6 +54,12 @@ def get_dataset_strong(cfg):
             )
         elif cfg.DISTILLER.TYPE == "MLLD_KCD":
             train_loader, val_loader, num_data, train_set = get_kcd_dataloader(
+                batch_size=cfg.SOLVER.BATCH_SIZE,
+                val_batch_size=cfg.DATASET.TEST.BATCH_SIZE,
+                num_workers=cfg.DATASET.NUM_WORKERS,
+            )
+        elif cfg.DISTILLER.TYPE == "MLLD_KCD_OLD":
+            train_loader, val_loader, num_data, train_set = get_kcd_dataloader_old(
                 batch_size=cfg.SOLVER.BATCH_SIZE,
                 val_batch_size=cfg.DATASET.TEST.BATCH_SIZE,
                 num_workers=cfg.DATASET.NUM_WORKERS,
