@@ -64,6 +64,7 @@ class MLLD_KCD_1101(Distiller):
         self.temperature = cfg.KD.TEMPERATURE
         self.ce_loss_weight = cfg.KD.LOSS.CE_WEIGHT
         self.kd_loss_weight = cfg.KD.LOSS.KD_WEIGHT
+        self.wspm_loss_weight = cfg.KD.LOSS.WSPM_WEIGHT
         self.z_score = cfg.KD.Z_SCORE
         self.N0 = cfg.KD.WSM
 
