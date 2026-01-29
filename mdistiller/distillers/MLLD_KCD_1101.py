@@ -1,10 +1,11 @@
+# Zscore-norm, MLLD, Not remove C type, Loss Rank
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 from ._base import Distiller
 from fast_soft_sort.pytorch_ops import soft_rank
-
 
 def weighted_spearman(logits_student, logits_teacher, N0):
     sr = soft_rank(logits_student)
@@ -55,14 +56,13 @@ def bc_loss(logits_student, logits_teacher, temperature, reduce=True):
     return consistency_loss
 
 
-class MLLD_KCD(Distiller):
+class MLLD_KCD_1101(Distiller):
     """Distilling the Knowledge in a Neural Network"""
 
     def __init__(self, student, teacher, cfg):
-        super(MLLD_KCD, self).__init__(student, teacher)
+        super(MLLD_KCD_1101, self).__init__(student, teacher)
         self.temperature = cfg.KD.TEMPERATURE
         self.ce_loss_weight = cfg.KD.LOSS.CE_WEIGHT
-        self.wspm_loss_weight = cfg.KD.LOSS.WSPM_WEIGHT
         self.kd_loss_weight = cfg.KD.LOSS.KD_WEIGHT
         self.z_score = cfg.KD.Z_SCORE
         self.N0 = cfg.KD.WSM
