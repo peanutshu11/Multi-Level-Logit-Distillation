@@ -52,14 +52,8 @@ def get_dataset_strong(cfg):
                 k=cfg.CRD.NCE.K,
                 mode=cfg.CRD.MODE,
             )
-        elif cfg.DISTILLER.TYPE == "MLLD_KCD":
+        elif cfg.DATASET.KCD is True:
             train_loader, val_loader, num_data, train_set = get_kcd_dataloader(
-                batch_size=cfg.SOLVER.BATCH_SIZE,
-                val_batch_size=cfg.DATASET.TEST.BATCH_SIZE,
-                num_workers=cfg.DATASET.NUM_WORKERS,
-            )
-        elif cfg.DISTILLER.TYPE == "MLLD_KCD_OLD":
-            train_loader, val_loader, num_data, train_set = get_kcd_dataloader_old(
                 batch_size=cfg.SOLVER.BATCH_SIZE,
                 val_batch_size=cfg.DATASET.TEST.BATCH_SIZE,
                 num_workers=cfg.DATASET.NUM_WORKERS,
@@ -71,21 +65,6 @@ def get_dataset_strong(cfg):
                 num_workers=cfg.DATASET.NUM_WORKERS,
             )
         num_classes = 100
-    elif cfg.DATASET.TYPE == "imagenet":
-        if cfg.DISTILLER.TYPE == "CRD":
-            train_loader, val_loader, num_data = get_imagenet_dataloaders_sample(
-                batch_size=cfg.SOLVER.BATCH_SIZE,
-                val_batch_size=cfg.DATASET.TEST.BATCH_SIZE,
-                num_workers=cfg.DATASET.NUM_WORKERS,
-                k=cfg.CRD.NCE.K,
-            )
-        else:
-            train_loader, val_loader, num_data = get_imagenet_dataloaders_strong(
-                batch_size=cfg.SOLVER.BATCH_SIZE,
-                val_batch_size=cfg.DATASET.TEST.BATCH_SIZE,
-                num_workers=cfg.DATASET.NUM_WORKERS,
-            )
-        num_classes = 1000
     else:
         raise NotImplementedError(cfg.DATASET.TYPE)
 

@@ -16,3 +16,5 @@ SOLVER:
   MOMENTUM: 0.9
   TYPE: "SGD"
   TRAINER: "kcd"
+DATASET:
+  KCD: True
