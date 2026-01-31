@@ -15,6 +15,6 @@ SOLVER:
   WEIGHT_DECAY: 0.0005
   MOMENTUM: 0.9
   TYPE: "SGD"
-  TRAINER: "kcd"
+  TRAINER: "kcd_old"
 DATASET:
   KCD: True
