@@ -22,6 +22,8 @@ from .MLLD_KCD import MLLD_KCD
 from .MLLD_KCD_old import MLLD_KCD_old
 from .MLLD_KCD_1101 import MLLD_KCD_1101
 from .MLLD_KCD_1100 import MLLD_KCD_1100
+from .MLLD_KCD_0101 import MLLD_KCD_0101
+from .MLLD_KCD_0100 import MLLD_KCD_0100
 
 distiller_dict = {
     "NONE": Vanilla,
@@ -33,6 +35,8 @@ distiller_dict = {
     "MLLD_KCD_old": MLLD_KCD_old,
     "MLLD_KCD_1101": MLLD_KCD_1101,
     "MLLD_KCD_1100": MLLD_KCD_1100,
+    "MLLD_KCD_0101": MLLD_KCD_0101,
+    "MLLD_KCD_0100": MLLD_KCD_0100,
     "KD_ZWSpearman": KD_ZWSpearman,
     "wRKKD": wRKKD,
     "AT": AT,

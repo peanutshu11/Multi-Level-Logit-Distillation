@@ -46,7 +46,7 @@ class MLLD_KCD_1101(Distiller):
         super(MLLD_KCD_1101, self).__init__(student, teacher)
         self.temperature = cfg.KD.TEMPERATURE
         self.ce_loss_weight = cfg.KD.LOSS.CE_WEIGHT
-        self.kd_loss_weight = cfg.KD.LOSS.KD_WEIGHT
+        self.kd_loss_weight = cfg.KD.LOSS.KD_WEIGHT_2
         self.z_score = cfg.KD.Z_SCORE
 
     def z_score_norm(self, logits):

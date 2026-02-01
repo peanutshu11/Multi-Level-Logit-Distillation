@@ -1,4 +1,4 @@
-# Zscore-norm, MLLD, Not remove C type, Loss Rank
+# Not Zscore-norm, MLLD, Not remove C type, Loss Rank
 
 import torch
 import torch.nn as nn
