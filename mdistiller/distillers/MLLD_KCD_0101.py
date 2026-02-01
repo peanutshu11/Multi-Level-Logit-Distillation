@@ -65,7 +65,7 @@ class MLLD_KCD_0101(Distiller):
         self.ce_loss_weight = cfg.KD.LOSS.CE_WEIGHT
         self.kd_loss_weight = cfg.KD.LOSS.KD_WEIGHT_1
         self.wspm_loss_weight = cfg.KD.LOSS.WSPM_WEIGHT
-        self.z_score = cfg.KD.Z_SCORE
+        self.z_score = cfg.KD.Z_SCORE_0
         self.N0 = cfg.KD.WSM
 
     def z_score_norm(self, logits):
