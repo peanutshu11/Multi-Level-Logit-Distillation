@@ -17,7 +17,7 @@ def weighted_spearman(logits_student, logits_teacher, N0):
     x_bar = (weights * sr).sum() / w_sum
     y_bar = (weights * tr).sum() / w_sum
 
-    cov = (weights * (sr - x_bar) * (tr - y_bar)).sum()
+    cov = (weights * (sr - x_bar) * (tr - y_bar)).sum() 
     var_x = (weights * (sr - x_bar).pow(2)).sum()
     var_y = (weights * (tr - y_bar).pow(2)).sum()
 

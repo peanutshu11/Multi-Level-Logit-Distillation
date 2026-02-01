@@ -67,7 +67,7 @@ CFG.KD.LOSS.KD_WEIGHT_1 = 0.7 # for calculate with WSPM loss
 CFG.KD.LOSS.KD_WEIGHT_2 = 0.9 # for calculate without WSPM loss
 CFG.KD.Z_SCORE = True
 CFG.KD.Z_SCORE_0 = False # for distillers without z-score normalization
-CFG.KD.WSM = 1
+CFG.KD.WSM = 1 
 
 # AT CFG
 CFG.AT = CN()

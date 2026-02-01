@@ -51,7 +51,7 @@ class MLLD_KCD_1100(Distiller):
 
     def z_score_norm(self, logits):
         mean = logits.mean(dim=1, keepdim=True)
-        std = logits.std(dim=1, keepdim=True) + 1e-6
+        std = logits.std(dim=1, keepdim=True) + 1e-6 
         result = (logits - mean) / std
         return result
 
