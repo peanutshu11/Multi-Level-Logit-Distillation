@@ -3,7 +3,7 @@ EXPERIMENT:
   TAG: "kcd,res50,mv2"
   PROJECT: "cifar100_baselines"
 DISTILLER:
-  TYPE: "MLLD_KCD_1101"
+  TYPE: "MLLD_KCD_1100"
   TEACHER: "ResNet50"
   STUDENT: "MobileNetV2"
 SOLVER:
