@@ -39,11 +39,11 @@ def bc_loss(logits_student, logits_teacher, temperature, reduce=True):
     return consistency_loss
 
 
-class MLLD_KCD_1101(Distiller):
+class MLLD_KCD_1100(Distiller):
     """Distilling the Knowledge in a Neural Network"""
 
     def __init__(self, student, teacher, cfg):
-        super(MLLD_KCD_1101, self).__init__(student, teacher)
+        super(MLLD_KCD_1100, self).__init__(student, teacher)
         self.temperature = cfg.KD.TEMPERATURE
         self.ce_loss_weight = cfg.KD.LOSS.CE_WEIGHT
         self.kd_loss_weight = cfg.KD.LOSS.KD_WEIGHT_2
