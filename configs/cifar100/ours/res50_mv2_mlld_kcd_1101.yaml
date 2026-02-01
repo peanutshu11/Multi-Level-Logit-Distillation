@@ -17,4 +17,4 @@ SOLVER:
   TYPE: "SGD"
   TRAINER: "kcd_old"
 DATASET:
-  KCD: True
+  KCD: "old"

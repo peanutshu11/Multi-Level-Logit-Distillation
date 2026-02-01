@@ -1,5 +1,5 @@
 from torchvision import datasets
-from .cifar100 import get_data_folder, get_cifar100_train_transform, get_cifar100_test_transform
+from .cifar100 import get_data_folder, get_cifar100_train_transform, get_cifar100_test_transform, get_cifar100_dataloaders_strong
 from torch.utils.data import DataLoader
 import numpy as np
 from PIL import Image
@@ -101,6 +101,29 @@ class KCDCIFAR100(datasets.CIFAR100):
 def get_kcd_dataloader(batch_size, val_batch_size, num_workers):
     data_folder = get_data_folder()
     train_transform = get_cifar100_train_transform()
+    test_transform = get_cifar100_test_transform()
+    train_set = KCDCIFAR100(
+        root=data_folder, download=True, train=True, transform=train_transform
+    )
+    num_data = len(train_set)
+    test_set = datasets.CIFAR100(
+        root=data_folder, download=True, train=False, transform=test_transform
+    )
+
+    train_loader = DataLoader(
+        train_set, batch_size=batch_size, shuffle=True, num_workers=num_workers
+    )
+    test_loader = DataLoader(
+        test_set,
+        batch_size=val_batch_size,
+        shuffle=False,
+        num_workers=1,
+    )
+    return train_loader, test_loader, num_data, train_set
+
+def get_kcd_dataloader_strong(batch_size, val_batch_size, num_workers):
+    data_folder = get_data_folder()
+    train_transform = get_cifar100_dataloaders_strong()
     test_transform = get_cifar100_test_transform()
     train_set = KCDCIFAR100(
         root=data_folder, download=True, train=True, transform=train_transform

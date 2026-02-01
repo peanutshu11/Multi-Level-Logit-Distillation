@@ -52,12 +52,19 @@ def get_dataset_strong(cfg):
                 k=cfg.CRD.NCE.K,
                 mode=cfg.CRD.MODE,
             )
-        elif cfg.DATASET.KCD is True:
-            train_loader, val_loader, num_data, train_set = get_kcd_dataloader(
-                batch_size=cfg.SOLVER.BATCH_SIZE,
-                val_batch_size=cfg.DATASET.TEST.BATCH_SIZE,
-                num_workers=cfg.DATASET.NUM_WORKERS,
-            )
+        elif cfg.DATASET.KCD is not None:
+            if cfg.DATASET.KCD == "new":
+                train_loader, val_loader, num_data, train_set = get_kcd_dataloader(
+                    batch_size=cfg.SOLVER.BATCH_SIZE,
+                    val_batch_size=cfg.DATASET.TEST.BATCH_SIZE,
+                    num_workers=cfg.DATASET.NUM_WORKERS,
+                )
+            if cfg.DATASET.KCD == "old":
+                train_loader, val_loader, num_data, train_set = get_kcd_dataloader_old(
+                    batch_size=cfg.SOLVER.BATCH_SIZE,
+                    val_batch_size=cfg.DATASET.TEST.BATCH_SIZE,
+                    num_workers=cfg.DATASET.NUM_WORKERS,
+                )
         else:
             train_loader, val_loader, num_data = get_cifar100_dataloaders_strong(
                 batch_size=cfg.SOLVER.BATCH_SIZE,
